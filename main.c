@@ -1,30 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
-void poissonDagilim(int,int);
-void binomDagilim(double,double);
+void poisson(int,int);
+void binom(double,double);
 int main()
 {
 
-    int a,b;
-    printf("\tPoisson Dagilimi:\n\nx giriniz:5 \nlambda giriniz:5\n");poissonDagilim(5,5);
+    int select;
+    bas:
+    printf("1)Poisson\n2)Binom\n");
+    printf("Lutfen Sayi Giriniz...");scanf("%d",&select);
+    if(select==1)
+    {
+        int a,b;
+    printf("\t\t\t************Poisson Dagilimi************\n\nx giriniz:5 \t\tlambda giriniz:5\t");poisson(5,5);
     printf("\n\nx giriniz:");
     scanf("%d",&a);
-    printf("lambda giriniz: ");
+    printf("\nlambda giriniz: ");
     scanf("%d",&b);
-    poissonDagilim(a,b);
-
-    int c,d;
-    printf("\n\n\n\tBinom Dagilimi:\n\nn giriniz:2 \t\tx giriniz:1\t\t");
-    binomDagilim(1,2);
+    printf("\n");
+    poisson(a,b);
+    goto bas;
+    }
+    else if(select==2)
+    {
+        int c,d;
+        printf("\n\n\n\t\t\t************Binom Dagilimi************\n\nn giriniz:2 \t\tx giriniz:1\t\t");
+    binom(1,2);
     printf("\n\nn giriniz:");
     scanf("%d",&d);
     printf("\n\nx giriniz:");
     scanf("%d",&c);
-    binomDagilim(c,d);
+    binom(c,d);
+    goto bas;
+    }
+    else{printf("yanlis secim!");goto bas;}
 
 }
 
-void poissonDagilim(int a,int b)
+void poisson(int a,int b)
 {
     int x=a;
     int lmbd=b;
@@ -37,26 +50,33 @@ void poissonDagilim(int a,int b)
         toplam1=toplam1*lmbd;
 
     }
+
     toplam2=exp(lmbd);
 
-
+    if(0<=x)
+    {
     for(j=1;j<=x;j++)
     {
         toplam3*=j;
     }
 
+    }
+    else
+    {
+        printf("negatif sayi");
+    }
     toplam=toplam1/(toplam2*toplam3);
     printf("toplam:%.5f\n\n",toplam);
 }
 
-void binomDagilim(double c,double d)
+void binom(double c,double d)
 {
     double x=c;
     double n=d;
 
-    float combination;
+    float com;
     float fak(int n);
-    combination=fak(n)/(fak(x)*fak(n-x));
+    com=fak(n)/(fak(x)*fak(n-x));//kombinasyon hesaplama
 
     double p[10];
     double toplam1[10];
@@ -82,6 +102,17 @@ void binomDagilim(double c,double d)
     }
     printf("\n\n");
 
+    p[0]=0.05;
+    p[1]=0.1;
+    p[2]=0.2;
+    p[3]=0.3;
+    p[4]=0.4;
+    p[5]=0.5;
+    p[6]=0.6;
+    p[7]=0.7;
+    p[8]=0.8;
+    p[9]=0.9;
+    p[10]=0.95;
 
     int j;
     for(j=0;j<=10;j++)
@@ -91,11 +122,11 @@ void binomDagilim(double c,double d)
 int m;
 for(m=0;m<=10;m++)
 {
-    printf("%.3f\n",combination*toplam1[m]*toplam2[m]);
+    printf("%.3f icin==> C(%.f ,%.f)* (%.3f^%.f)* (1-%.3f)^(%.f-%.f)=%.3f\n",p[m],n,x,p[m],x,p[m],n,x,com*toplam1[m]*toplam2[m]);
 }
-printf("\n\n");
 
 }
+//faktöriyel hesaplama(kombinasyon için)
  float fak(int n){
     float f;
     f=1;
